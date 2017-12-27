@@ -52,3 +52,12 @@ curl -i -X POST -H "Content-Type: application/json" -d @body-with-bom.txt https:
 curl -i -X POST -H "Content-Type: application/json" -d @body-with-bom.txt https://future-app-backend.appspot.com/01f35a9d-2825-43f9-bad3-c39c3adf4008?validationtoken=foo
 
 ```
+
+# Other Resources
+
+- https://github.com/SharePoint/sp-dev-samples/tree/master/Samples/WebHooks.Nodejs sharepoint webhooks from nodejs including
+  private key based authentication to sharepoint
+- https://msdn.microsoft.com/library/office/jj860569(v=office.15).aspx Sharepoint REST API Reference docs
+- https://docs.microsoft.com/en-us/sharepoint/dev/apis/webhooks/overview-sharepoint-webhooks Docs on Sharepoint Webhooks
+- https://github.com/SharePoint/PnP-JS-Core Sharepoint JavaScript API
+- https://blogs.msdn.microsoft.com/patrickrodgers/2016/10/17/using-pnp-js-core-and-node-sp-auth/ on using pnp-js-core with node-sp-auth
