@@ -2,7 +2,7 @@
   "name": "functions",
   "description": "Cloud Functions for Firebase",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && tslint --project tsconfig.json",
     "serve": "npm run build && firebase serve --only functions",
     "shell": "npm-run-all --race --parallel shell:watch tsc:watch",
     "shell:watch": "firebase experimental:functions:shell",
@@ -30,6 +30,7 @@
   "devDependencies": {
     "npm-run-all": "^4.1.2",
     "ts-node": "^3.3.0",
+    "tslint": "^5.8.0",
     "typescript": "^2.6.2"
   }
 }

@@ -1,14 +1,12 @@
-import * as functions from 'firebase-functions';
-import { firestore, initializeApp } from 'firebase-admin';
 import * as pubsub from '@google-cloud/pubsub';
-import { config } from './config';
-import { setup, Web } from "sp-pnp-js";
-import * as nodeFetch from 'node-fetch';
-import { AuthenticationContext, TokenResponse, ErrorResponse } from 'adal-node';
+import { AuthenticationContext, ErrorResponse, TokenResponse } from 'adal-node';
+import { firestore, initializeApp } from 'firebase-admin';
+import * as functions from 'firebase-functions';
 import { readFileSync } from 'fs';
-import * as path from 'path'
-
-// inspired by https://github.com/SharePoint/sp-dev-samples/tree/master/Samples/WebHooks.Nodejs
+import * as nodeFetch from 'node-fetch';
+import * as path from 'path';
+import { setup, Web } from 'sp-pnp-js';
+import { config } from './config';
 
 const projectId = 'future-app-backend';
 const topicName = 'sharepoint-notifications';
@@ -32,6 +30,9 @@ initializeApp(cfg.firebase);
 const web = new Web(config.webhookConfig.url);
 const list = web.lists.getByTitle(config.webhookConfig.listName);
 
+// tslint:disable:no-console since we use logging in cloud functions
+
+// tslint:disable:max-line-length
 /*
     to test in functions shell:
     webhookcde99ee3b82d44c18d6bfd8d017f8232.post().json({value:
@@ -48,7 +49,8 @@ const list = web.lists.getByTitle(config.webhookConfig.listName);
 
     or single line:
     webhookcde99ee3b82d44c18d6bfd8d017f8232.post().json({value:[{subscriptionId:'90c93769-560e-4432-ade0-1f73a37ad8a2',clientState:'915fbff2-e710-46c8-8888-e1277df50539',expirationDateTime:'2018-03-26T06:34:48.8110000Z',resource:'a30fa073-df7d-413b-9113-986d8e617827',tenantId:'624da980-6a1a-48fd-83c7-af3ae3e41911',siteUrl:'/sites/ExampleTeamSite',webId:'4d323110-7184-4d75-a629-62f0db9cc757'}]})
-    */
+*/
+// tslint:enable:max-line-length
 async function httpSharepointWebhook(req: functions.Request, res: functions.Response) {
     try {
         console.log('got sharepoint notification', req.body);
@@ -87,7 +89,7 @@ async function initializeSync(_req: functions.Request, res: functions.Response) 
         }
         // delete any existing documents
         const collection = await db.collection(firestoreCollection).get();
-        collection.forEach(doc => {
+        collection.forEach((doc) => {
             console.log('deleting database document', doc.ref.path);
             batch.delete(doc.ref);
         });
@@ -111,11 +113,14 @@ async function initializeSync(_req: functions.Request, res: functions.Response) 
         console.log('existing list subscriptions', subscriptions);
 
         // delete any of our old subscriptions
-        await Promise.all(subscriptions.filter(s => s.notificationUrl.startsWith('https://future-app-backend.appspot.com')).map(async s => {
-            console.log('deleting subscription', s.id);
-            await list.subscriptions.getById(s.id).delete();
-            console.log('deleted subscription', s.id);
-        }));
+        await Promise.all(subscriptions
+            .filter((s) => s.notificationUrl.startsWith('https://future-app-backend.appspot.com'))
+            .map(async (s) => {
+                console.log('deleting subscription', s.id);
+                await list.subscriptions.getById(s.id).delete();
+                console.log('deleted subscription', s.id);
+            }),
+        );
 
         // creating new sharepoint list subscription
         console.log('adding sharepoint list subscription');
@@ -130,23 +135,25 @@ async function initializeSync(_req: functions.Request, res: functions.Response) 
     }
 }
 
+// tslint:disable:max-line-length
 /*
-to test in functions shell:
-pubsubNotification({data: new Buffer(JSON.stringify({value:
-    [{
-        subscriptionId: 'aec19e67-e12c-48da-9088-16d23ad91a0c',
-        clientState: '915fbff2-e710-46c8-8888-e1277df50539',
-        expirationDateTime: '2018-03-26T06:34:48.8110000Z',
-        resource: 'a30fa073-df7d-413b-9113-986d8e617827',
-        tenantId: '624da980-6a1a-48fd-83c7-af3ae3e41911',
-        siteUrl: '/sites/ExampleTeamSite',
-        webId: '4d323110-7184-4d75-a629-62f0db9cc757'
-    }]
-}))})
+    to test in functions shell:
+    pubsubNotification({data: new Buffer(JSON.stringify({value:
+        [{
+            subscriptionId: 'aec19e67-e12c-48da-9088-16d23ad91a0c',
+            clientState: '915fbff2-e710-46c8-8888-e1277df50539',
+            expirationDateTime: '2018-03-26T06:34:48.8110000Z',
+            resource: 'a30fa073-df7d-413b-9113-986d8e617827',
+            tenantId: '624da980-6a1a-48fd-83c7-af3ae3e41911',
+            siteUrl: '/sites/ExampleTeamSite',
+            webId: '4d323110-7184-4d75-a629-62f0db9cc757'
+        }]
+    }))})
 
-or single line:
-pubsubNotification({data: new Buffer(JSON.stringify({value:[{subscriptionId:'aec19e67-e12c-48da-9088-16d23ad91a0c',clientState:'915fbff2-e710-46c8-8888-e1277df50539',expirationDateTime:'2018-03-26T06:34:48.8110000Z',resource:'a30fa073-df7d-413b-9113-986d8e617827',tenantId:'624da980-6a1a-48fd-83c7-af3ae3e41911',siteUrl:'/sites/ExampleTeamSite',webId:'4d323110-7184-4d75-a629-62f0db9cc757'}]}))})
+    or single line:
+    pubsubNotification({data: new Buffer(JSON.stringify({value:[{subscriptionId:'aec19e67-e12c-48da-9088-16d23ad91a0c',clientState:'915fbff2-e710-46c8-8888-e1277df50539',expirationDateTime:'2018-03-26T06:34:48.8110000Z',resource:'a30fa073-df7d-413b-9113-986d8e617827',tenantId:'624da980-6a1a-48fd-83c7-af3ae3e41911',siteUrl:'/sites/ExampleTeamSite',webId:'4d323110-7184-4d75-a629-62f0db9cc757'}]}))})
 */
+// tslint:enable:max-line-length
 async function pubsubSharepointNotification(evt: functions.Event<functions.pubsub.Message>) {
     try {
         let payload: Notifications;
@@ -167,7 +174,7 @@ async function pubsubSharepointNotification(evt: functions.Event<functions.pubsu
         const db = firestore();
         const batch = db.batch();
 
-        let changeToken: string | undefined = undefined;
+        let changeToken: string | undefined;
         const stateDoc = await db.doc(firestoreSyncStateDoc).get();
         if (stateDoc.exists && stateDoc.data().changeToken) {
             changeToken = stateDoc.data().changeToken;
@@ -179,10 +186,11 @@ async function pubsubSharepointNotification(evt: functions.Event<functions.pubsu
         for (const notification of payload.value) {
             // renew sharepoint subscription (expires after 90 days)
             const expiration = subscriptionExpirationDate();
-            console.log('renewing subscription until', expiration)
+            console.log('renewing subscription until', expiration);
             await list.subscriptions.getById(notification.subscriptionId).update(expiration);
             console.log('renewed subscription, now getting changes since', changeToken);
-            // get all changes to list, see SP.ChangeQuery Properties: https://msdn.microsoft.com/en-us/library/office/ee550385(v=office.14).aspx
+            // get all changes to list
+            // see SP.ChangeQuery Properties: https://msdn.microsoft.com/en-us/library/office/ee550385(v=office.14).aspx
             // list.getListItemChangesSinceToken returns XML, so we go for the explicit route using getChanges
             const changes: ChangeItem[] = await list.getChanges({
                 Item: true,
@@ -190,8 +198,8 @@ async function pubsubSharepointNotification(evt: functions.Event<functions.pubsu
                 Update: true,
                 DeleteObject: true,
                 Restore: true,
-                ChangeTokenStart: changeToken ? { StringValue: changeToken } : undefined
-            })
+                ChangeTokenStart: changeToken ? { StringValue: changeToken } : undefined,
+            });
             // reverse sort by timestamp
             changes.sort((a, b) => a.Time < b.Time ? 1 : a.Time > b.Time ? -1 : 0);
             console.log('fetched changes', changes);
@@ -202,17 +210,20 @@ async function pubsubSharepointNotification(evt: functions.Event<functions.pubsu
                 batch.update(stateDoc.ref, { changeToken });
             }
             // get distinct item ids
-            const itemIds = new Set(changes.map(c => c.ItemId!));
+            const itemIds = new Set(changes.map((c) => c.ItemId!));
             // for each item id get most recent change type (to nullify things like add and remove in singe changeset)
-            const lastChangeTypes = Array.from(itemIds).map(id => ({ id, changeType: changes.find(c => c.ItemId === id)!.ChangeType! }));
+            const lastChangeTypes = Array.from(itemIds).map((id) => ({
+                id,
+                changeType: changes.find((c) => c.ItemId === id)!.ChangeType!,
+            }));
             // for each item id and change type add a database change to the batch
-            await Promise.all(lastChangeTypes.map(change => {
+            await Promise.all(lastChangeTypes.map((change) => {
                 const docRef = db.collection(firestoreCollection).doc(`${change.id}`);
                 switch (change.changeType) {
                     case ChangeType.Added:
                     case ChangeType.Restore:
                     case ChangeType.Updated:
-                        return web.lists.getById(notification.resource).items.getById(change.id).get().then(item => {
+                        return web.lists.getById(notification.resource).items.getById(change.id).get().then((item) => {
                             console.log('updating document', change.id);
                             batch.set(docRef, item);
                         });
@@ -246,7 +257,7 @@ interface Notifications {
         tenantId: string;
         siteUrl: string;
         webId: string;
-    }>
+    }>;
 }
 
 interface ChangeItem {
@@ -291,20 +302,26 @@ async function setupSharepointToken() {
     setup({
         sp: {
             headers: {
-                'Authorization': `Bearer ${await getAppOnlyAccessToken()}`
-            }
-        }
+                Authorization: `Bearer ${await getAppOnlyAccessToken()}`,
+            },
+        },
     });
 }
 
 async function getAppOnlyAccessToken() {
     const context = new AuthenticationContext(config.adalConfig.authority);
     return (await new Promise<TokenResponse>((resolve, reject) => {
-        context.acquireTokenWithClientCertificate(config.adalConfig.resource, config.adalConfig.clientID, certificate, config.adalConfig.fingerPrint, (err, response) => {
-            if (err) { return reject(err); }
-            if (response.error) { return reject(response as ErrorResponse) }
-            return resolve(response as TokenResponse);
-        });
+        context.acquireTokenWithClientCertificate(
+            config.adalConfig.resource,
+            config.adalConfig.clientID,
+            certificate,
+            config.adalConfig.fingerPrint,
+            (err, response) => {
+                if (err) { return reject(err); }
+                if (response.error) { return reject(response as ErrorResponse); }
+                return resolve(response as TokenResponse);
+            },
+        );
     })).accessToken;
 }
 
