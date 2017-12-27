@@ -39,7 +39,7 @@ import (
 # Testing
 
 ```shell
-# directly to go proxy:
+# directly to local go proxy:
 curl -i -X POST -H "Content-Type: application/json" -d @body-with-bom.txt http://localhost:8080/01f35a9d-2825-43f9-bad3-c39c3adf4008?validationtoken=foo
 
 # directly to firebase cloud function:

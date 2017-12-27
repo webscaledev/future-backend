@@ -4,19 +4,28 @@
   "scripts": {
     "build": "tsc",
     "serve": "npm run build && firebase serve --only functions",
-    "shell": "firebase experimental:functions:shell",
+    "shell": "npm-run-all --race --parallel shell:watch tsc:watch",
+    "shell:watch": "firebase experimental:functions:shell",
     "start": "npm run shell",
     "deploy": "npm run build && firebase deploy --only functions",
-    "logs": "firebase functions:log"
+    "logs": "firebase functions:log",
+    "tsc:watch": "tsc --watch"
   },
   "dependencies": {
+    "@google-cloud/pubsub": "^0.16.1",
+    "@types/google-cloud__pubsub": "^0.14.0",
+    "@types/request-promise-native": "^1.0.10",
+    "adal-node": "^0.1.26",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "firebase-admin": "~5.4.2",
-    "firebase-functions": "^0.7.1"
+    "firebase-functions": "^0.7.1",
+    "request": "^2.83.0",
+    "request-promise-native": "^1.0.5"
   },
   "private": true,
   "devDependencies": {
+    "npm-run-all": "^4.1.2",
     "ts-node": "^3.3.0",
     "typescript": "^2.6.2"
   }

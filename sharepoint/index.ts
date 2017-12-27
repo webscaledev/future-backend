@@ -36,7 +36,7 @@ async function sync() {
 
     const addGoCloud = await sharepoint.post(`lists/getbytitle('Example List')/subscriptions`, {
         resource: `${api}lists/getbytitle('Example List')`,
-        notificationUrl: 'https://future-app-backend.appspot.com',
+        notificationUrl: 'https://future-app-backend.appspot.com/01f35a9d-2825-43f9-bad3-c39c3adf4008',
         expirationDateTime: moment().add(90, 'days'),
         clientState: config.webhookConfig.clientState,
     });

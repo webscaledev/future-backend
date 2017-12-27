@@ -7,4 +7,4 @@ handlers:
   secure: always
 
 env_variables:
-  FUNCTIONS_URI: 'https://us-central1-future-app-backend.cloudfunctions.net/cde99ee3b82d44c18d6bfd8d017f8232'
+  FUNCTIONS_URI: 'https://us-central1-future-app-backend.cloudfunctions.net/webhookcde99ee3b82d44c18d6bfd8d017f8232'
