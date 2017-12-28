@@ -9,7 +9,8 @@
     "start": "npm run shell",
     "deploy": "npm run build && firebase deploy --only functions",
     "logs": "firebase functions:log",
-    "tsc:watch": "tsc --watch"
+    "tsc:watch": "tsc --watch",
+    "keycred": "keycred"
   },
   "dependencies": {
     "@google-cloud/pubsub": "^0.16.1",
@@ -22,12 +23,14 @@
     "firebase-admin": "~5.4.2",
     "firebase-functions": "^0.7.1",
     "node-fetch": "^1.7.3",
+    "raw-body": "^2.3.2",
     "request": "^2.83.0",
     "request-promise-native": "^1.0.5",
     "sp-pnp-js": "^3.0.3"
   },
   "private": true,
   "devDependencies": {
+    "keycred": "^1.0.0",
     "npm-run-all": "^4.1.2",
     "ts-node": "^3.3.0",
     "tslint": "^5.8.0",

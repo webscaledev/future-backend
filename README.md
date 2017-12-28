@@ -1,3 +1,22 @@
+# Installation and Configuration
+
+- Create a new private key / certificate pair by running `npm run keycred` in the `functions` directory. Choose
+  to create a new certificate, answer all questions (values don't really matter) and set the certificate to expire
+  in 30 years.
+- In Azure AD create a new `App Registration`
+  - Under `Required Permissions` add the *Application Permission*
+    `Read and write items and lists in all site collections` from the `Office 365 SharePoint Online` API category
+  - Click the `Grant Permissions` button in the header of the `Required Permissions` panel to activate the
+    permissions
+  - Edit the manifest (button in header) for the new Registered App and add the Key Credentials object you got
+    from running `keycred` to the `keyCredentials` array in the manifest to allow certificate-based signin to this application user (aka service account)
+- Finally your cloud functions need to know about this security information. Store the certificate fingerprint and
+  the Azure AD Application ID in a Firestore document `/config/auth` with keys `certFingerprint` and `clientId`.
+  The private key should be stored in Firebase Storage in a file named `config/privkey.pem`.
+  Be sure to lockdown both the Firestore and Firebase Storage with rules to keep this information private.
+- Run deploy.sh that deploys both the App Engine as the Firebase project
+- Go to the Firebase Functions console and run the initialization Function
+
 # Visual Studio Code and App Engine Go
 
 See https://gist.github.com/pavanpodila/8bd0946e767597a9265464426109c609 and http://www.mazsoft.com/blog/post/2017/01/09/develop-go-appengine-api-using-visual-studio-code

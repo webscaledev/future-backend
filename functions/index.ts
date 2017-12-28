@@ -1,10 +1,9 @@
 import * as pubsub from '@google-cloud/pubsub';
 import { AuthenticationContext, ErrorResponse, TokenResponse } from 'adal-node';
-import { firestore, initializeApp } from 'firebase-admin';
+import { firestore, initializeApp, storage } from 'firebase-admin';
 import * as functions from 'firebase-functions';
-import { readFileSync } from 'fs';
 import * as nodeFetch from 'node-fetch';
-import * as path from 'path';
+import * as rawBody from 'raw-body';
 import { setup, Web } from 'sp-pnp-js';
 import { config } from './config';
 
@@ -13,9 +12,6 @@ const topicName = 'sharepoint-notifications';
 const firestoreCollection = 'test-items';
 const firestoreSyncStateDoc = '/config/sync-state';
 const notificationUrl = 'https://future-app-backend.appspot.com/01f35a9d-2825-43f9-bad3-c39c3adf4008';
-
-// TODO: get from storage or database
-const certificate = readFileSync(path.join(__dirname, 'privatekey.pem'), 'utf8');
 
 export const webhookcde99ee3b82d44c18d6bfd8d017f8232 = functions.https.onRequest(httpSharepointWebhook);
 export const initializee7ab0e6b9b1a413695181137a149b757 = functions.https.onRequest(initializeSync);
@@ -29,6 +25,8 @@ initializeApp(cfg.firebase);
 
 const web = new Web(config.webhookConfig.url);
 const list = web.lists.getByTitle(config.webhookConfig.listName);
+
+const db = firestore();
 
 // tslint:disable:no-console since we use logging in cloud functions
 
@@ -78,7 +76,6 @@ async function initializeSync(_req: functions.Request, res: functions.Response) 
     try {
         console.log('initializing sharepoint sync');
         await setupSharepointToken();
-        const db = firestore();
         let batch = db.batch();
 
         // delete changeToken in database to clear any existing sync state
@@ -171,7 +168,6 @@ async function pubsubSharepointNotification(evt: functions.Event<functions.pubsu
         // TODO: verify payload correctness (including secret and listid)
 
         await setupSharepointToken();
-        const db = firestore();
         const batch = db.batch();
 
         let changeToken: string | undefined;
@@ -308,14 +304,37 @@ async function setupSharepointToken() {
     });
 }
 
+let _auth: AuthDoc; // cache for performance in multiple invocations
+async function getAuthInfo() {
+    if (!_auth) {
+        const doc = await db.doc('/config/auth').get();
+        if (!doc.exists) {
+            throw new Error(`document ${doc.ref.path} not found`);
+        }
+        const st = storage();
+        const bucket = st.bucket();
+        const file = bucket.file('config/privkey.pem');
+        if (!(await file.exists())[0]) {
+            throw new Error(`file ${file.name} not found`);
+        }
+        const privKey = await rawBody(file.createReadStream());
+        _auth = {
+            ...doc.data(),
+            privKey: privKey.toString(),
+        } as AuthDoc;
+    }
+    return _auth;
+}
+
 async function getAppOnlyAccessToken() {
     const context = new AuthenticationContext(config.adalConfig.authority);
+    const auth = await getAuthInfo();
     return (await new Promise<TokenResponse>((resolve, reject) => {
         context.acquireTokenWithClientCertificate(
             config.adalConfig.resource,
-            config.adalConfig.clientID,
-            certificate,
-            config.adalConfig.fingerPrint,
+            auth.clientId,
+            auth.privKey,
+            auth.certFingerprint,
             (err, response) => {
                 if (err) { return reject(err); }
                 if (response.error) { return reject(response as ErrorResponse); }
@@ -327,4 +346,10 @@ async function getAppOnlyAccessToken() {
 
 function subscriptionExpirationDate() {
     return new Date(Date.now() + 89 * 24 * 60 * 60 * 1000).toISOString();
+}
+
+interface AuthDoc {
+    certFingerprint: string;
+    clientId: string;
+    privKey: string;
 }
