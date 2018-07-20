@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar color="primary" no-border-bottom>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="goToProfile()">
+        <ion-avatar>
+          <img class="rounded thumb-xxs b b-white" src="assets/img/hieu.png">
+        </ion-avatar>
+      </button>
+    </ion-buttons>
+
+    <ion-searchbar placeholder="Search" (ionFocus)="goToSearch()"></ion-searchbar>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="bg-muted">
+  <ion-row class="bg-white wrapper-sm m-t-sm" *ngFor="let i of [0,1,2,3,4,5,6,7,8]; let postIndex = index" (click)="goToPost(postIndex)">
+    <ion-col col-auto>
+      <ion-avatar item-start>
+        <user-avatar [sizeClass]="'thumb-sm'"></user-avatar>
+      </ion-avatar>
+      <div class="text-muted text-xs text-center">5h</div>
+    </ion-col>
+    <ion-col class="text-ellipsis-flex">
+      <div class="l-h">
+        <div class="">Congratulate Ryan Reynold <b>for starting a new role as Deadpool at: Deadpool 2</b></div>
+        <div class="text-sm text-muted text-ellipsis">Previously William Hayes</div>
+      </div>
+
+      <div>
+        <button ion-button outline small><b>Say congrats</b></button>
+        <button ion-button clear small icon-left>
+          <ion-icon name="md-thumbs-up"></ion-icon>
+          <b>Like</b>
+        </button>
+      </div>
+    </ion-col>
+    <ion-col col-auto>
+      <ion-icon class="text-2x text-muted" name="more"></ion-icon>
+    </ion-col>
+  </ion-row>
+</ion-content>

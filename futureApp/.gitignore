@@ -1,6 +1,15 @@
 # Specifies intentionally untracked files to ignore when using Git
 # http://git-scm.com/docs/gitignore
 
+google-services.json
+GoogleService-Info.plist
+my-release-key.jks
+*.apk
+*.p12
+
+functions/node_modules
+service-account.json
+
 *~
 *.sw[mnpcod]
 *.log
@@ -19,6 +28,7 @@ npm-debug.log*
 .versions/
 coverage/
 dist/
+config.ts
 node_modules/
 tmp/
 temp/

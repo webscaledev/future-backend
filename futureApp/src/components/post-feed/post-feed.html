@@ -1,0 +1,79 @@
+<ng-container *ngIf="(auth.user | async) || {} as user">
+<ion-content class="bg-muted" *ngFor="let post of posts | async; trackBy: trackByFn">
+    <div class="m-t-sm bg-white" (click)="goToPost(post)">
+      <ion-row class="padder-sm b-b b-light">
+        <!-- <ion-col align-self-center>
+          <div class="text-muted text-sm">
+            <span class="font-bold color-black">Blake Lively</span> commented on this
+          </div>
+        </ion-col> -->
+        <ion-col col-auto>
+          <ion-icon class="text-2x text-muted" name="more" (click)="presentPopover($event)"></ion-icon>
+        </ion-col>
+      </ion-row>
+      <ion-row class="wrapper-sm">
+        <ion-col col-auto>
+          <ion-avatar item-start>
+            <user-avatar [sizeClass]="'thumb-sm'"></user-avatar>
+          </ion-avatar>
+        </ion-col>
+        <ion-col class="text-ellipsis-flex">
+          <div class="l-h">
+            <div class="font-bold text-ellipsis">{{ post.displayName }}</div>
+            <div class="text-sm text-muted text-ellipsis">{{ post.job }}</div>
+            <!-- <div class="text-sm text-muted">2d · Edited</div> -->
+          </div>
+        </ion-col>
+        <ion-col col-auto>
+          <ion-icon class="text-2x text-muted" name="more" (click)="presentPopover($event)"></ion-icon>
+        </ion-col>
+      </ion-row>
+  
+      <div class="post-caption padder m-b-sm pos-rlt l-h">
+        {{ post.content }}
+        <span class="pos-abt bottom right text-muted padder bg-white">...see more</span>
+      </div>
+      <ion-img [src]="post.img || 'https://goo.gl/n62NG4'" onError="this.src='https://goo.gl/LJagAi'"></ion-img>
+      <!-- <post-attachment type="{{postIndex % 2 == 1 ? 'url' : 'image'}}"></post-attachment> -->
+  
+      <ion-row>
+          <ion-col>
+              <heart-button [userId]="user.uid" [post]="post"></heart-button>
+              
+          </ion-col>
+          <ion-col>
+              <div class="padder m-b-sm">
+                  <div class="b-b b-light">
+                    <div class="m-t-sm m-b-sm">
+                        <h3>{{ post.commentCount || 0 }}</h3>
+                        <p>Comments</p>
+                    </div>
+                  </div>
+                </div>
+          </ion-col>
+      </ion-row>
+  
+  
+      <ion-row>
+        <ion-col>
+          <button ion-button icon-left clear small color="muted">
+            <ion-icon name="thumbs-up"></ion-icon>
+            <div>Like</div>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-left clear small color="muted">
+            <ion-icon name="text"></ion-icon>
+            <div>Comment</div>
+          </button>
+        </ion-col>
+        <ion-col center text-center>
+          <button ion-button icon-left clear small color="muted">
+            <ion-icon name="share"></ion-icon>
+            <div>Share</div>
+          </button>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-content>
+</ng-container>

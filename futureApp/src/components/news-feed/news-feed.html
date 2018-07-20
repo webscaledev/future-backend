@@ -1,0 +1,24 @@
+<ng-container *ngIf="(auth.user | async) || {} as user">
+  <div *ngIf="news; then printData else empty"></div>
+  <ng-template #printData>
+    <ion-card *ngFor="let item of news; trackBy: trackByFn">
+      <ion-item>
+        <ion-avatar item-left>
+          <img src="assets/img/icon.png" />
+        </ion-avatar>
+        <h2>
+          Nieuwsitem week {{ item.weekNumber }}
+        </h2>
+        <p>door Redactie TFG</p>
+        <p> op {{ item.createDate }}</p>
+      </ion-item>
+      <ion-card-content>
+        <!-- <div [innerHTML]="item.fields.Samenvatting"></div> -->
+        <button ion-button full (click)="downloadAndOpenPdf(item)">Download en open PDF</button>
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
+</ng-container>
+<ng-template #empty>
+  We konden geen data vinden probeer het opnieuw...
+</ng-template>

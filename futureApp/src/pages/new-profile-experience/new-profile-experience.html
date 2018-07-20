@@ -1,0 +1,36 @@
+<ng-container *ngIf="auth.user | async as user">
+  <ion-header>
+
+    <ion-navbar color="primary">
+      <ion-title>{{ 'Nieuwe Ervaring' }}</ion-title>
+      <ion-buttons end>
+        <button [disabled]="!exp.photoURL" ion-button small (click)="updateProfileExperience(user)">
+          Opslaan
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+
+  </ion-header>
+
+
+  <ion-content padding>
+
+    <div class="bg-white wrapper text-center has-avatar-raised m-b-sm">
+      <ion-item>
+        <ion-label floating>Functie</ion-label>
+        <ion-input [(ngModel)]="exp.jobTitle" type="text">{{ exp.jobTitle }}</ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Bedrijf</ion-label>
+        <ion-input [(ngModel)]="exp.company" type="text">{{ exp.company }}</ion-input>
+      </ion-item>
+      <ion-label floating>Logo</ion-label>
+      <img class="rounded thumb-lg" [src]="exp.photoURL || 'assets/img/company.png'">
+      <image-upload [userId]="user.uid" (uploadFinished)="updateURL($event)"></image-upload>
+      <ion-item>
+        <ion-label floating>Duur</ion-label>
+        <ion-input [(ngModel)]="exp.duration" type="text">{{ exp.duration }}</ion-input>
+      </ion-item>
+    </div>
+  </ion-content>
+</ng-container>

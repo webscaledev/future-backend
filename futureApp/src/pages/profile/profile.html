@@ -1,0 +1,96 @@
+<ion-header>
+  <ion-navbar color="profile" no-border-bottom>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="goToSettings()">
+        <ion-icon name="ios-settings"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ng-container *ngIf="auth.user | async as user">
+<ion-content class="bg-muted">
+  <div class="wrapper-sm has-fab-bottom">
+    <div class="profile-cover" [style.backgroundImage]="'url(assets/img/photo2.png)'"></div>
+
+    <div class="bg-white wrapper text-center has-avatar-raised m-b-sm">
+      <ion-avatar class="avatar-raised">
+      <img class="profilepic rounded thumb-lg" (click)="goToProfileEdit(user)" [src]="user.photoURL || 'assets/img/default-avatar.jpg'">
+      </ion-avatar>
+      <div class="l-h m-b">
+        <div class="text-lg">{{ user.displayName }}</div>
+        <div class="">{{ user.maatschap }}</div>
+      </div>
+    </div>
+
+    <div class="bg-white m-b-sm">
+      <div class="wrapper-sm">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <div class="m-b">Ervaring</div>
+            </ion-col>
+            <ion-col>
+              <ion-buttons end>
+                <button ion-button icon-only clear color="dark" (click)="goToProfileExperiences(user)">
+                  <ion-icon name="md-create"></ion-icon>
+                </button>
+              </ion-buttons>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+
+      <profile-experience (click)="goToProfileExperiences(user)" [profileexperience]="profileexperience | async"></profile-experience>
+
+      <div class="wrapper-sm">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <div class="m-b">Skills</div>
+            </ion-col>
+            <ion-col>
+              <ion-buttons end>
+                <button ion-button icon-only clear color="dark" (click)="goToProfileSkills(user)">
+                  <ion-icon name="md-create"></ion-icon>
+                </button>
+              </ion-buttons>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+
+      <profile-skills (click)="goToProfileSkills(user)" [profileskills]="profileskills | async"></profile-skills>
+
+    </div>
+
+    <div class="wrapper-sm">
+      <div>Contact</div>
+    </div>
+
+    <ion-list class="m-n">
+      <ion-item class="b-none">
+        <ion-icon name="logo-linkedin" item-start></ion-icon>
+        <h3>
+          <div class="font-bold">Social</div>
+        </h3>
+        <p>{{ user.linkedin }}</p>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="md-mail" item-start></ion-icon>
+        <h3>
+          <div class="font-bold">Email</div>
+        </h3>
+        <p>{{ user.email }}</p>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="ios-chatboxes" item-start></ion-icon>
+        <h3>
+          <div class="font-bold">IM</div>
+        </h3>
+        <p>{{ user.mobile }}</p>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>
+</ng-container>

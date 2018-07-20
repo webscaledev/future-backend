@@ -1,0 +1,43 @@
+<!-- <ion-row class="wrapper-sm b-b b-light" *ngFor="let exp of profileexperience; let postIndex = index">
+    <ion-buttons *ngIf="showEdit" end>
+        <button ion-button icon-only clear (click)="goToProfileExperienceEdit(user)">
+            <ion-icon  name="create"></ion-icon> 
+        </button>
+    </ion-buttons>  
+  <ion-col col-auto>
+      <ion-avatar item-start>
+        <img class="thumb-sm" src="assets/img/company.png">
+      </ion-avatar>
+    </ion-col>
+    <ion-col class="text-ellipsis-flex">
+      <div class="l-h">
+        <div class="font-bold">{{ exp.jobTitle }}</div>
+        <div class="text-sm text-muted text-ellipsis">{{ exp.company }}</div>
+        <div class="text-xxs text-muted">
+          {{ exp.duration }}
+        </div>
+      </div>
+    </ion-col>
+  </ion-row> -->
+<ion-item-sliding *ngFor="let exp of profileexperience; let postIndex = index">
+  <ion-item detail-push>
+    <ion-avatar item-start>
+      <img class="thumb-sm" [src]="exp.photoURL || 'assets/img/company.png'">
+    </ion-avatar>
+    <div class="l-h">
+      <div class="font-bold">{{ exp.jobTitle }}</div>
+      <div class="text-sm text-muted text-ellipsis">{{ exp.company }}</div>
+      <div class="text-xxs text-muted">
+        {{ exp.duration }}
+      </div>
+    </div>
+  </ion-item>
+  <ion-item-options>
+    <button ion-button icon-only (click)="goToProfileExperienceEdit(exp)" color="secondary">
+      <ion-icon name="md-paper"></ion-icon>
+    </button>
+    <button ion-button icon-only (click)="deleteExperience(exp)" color="danger">
+      <ion-icon name="md-trash"></ion-icon>
+    </button>
+  </ion-item-options>
+</ion-item-sliding>
