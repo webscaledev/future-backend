@@ -1,0 +1,19 @@
+page-welcome {
+  .slide-logo {
+    padding: 0 6px;
+    border-radius: 4px;
+    font-weight: 700;
+    background-color: color($colors, primary);
+    color: #fff;
+  }
+
+  .bg-lighter {
+    background-color: lighten(color($colors, primary), 40%);
+  }
+
+  .logo{
+    width: 300px;
+    margin: auto;
+    display: block;
+  }
+}

@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-navbar color="primary" no-border-bottom>
+    <ion-title>
+      <div>
+        Ryan Renold
+      </div>
+      <div class="text-xxs"><ion-icon name="ios-checkmark-circle" color="secondary"></ion-icon> Online</div>
+    </ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content #content padding>
+  <div class="chat-list">
+    <div class="chat-item" *ngFor="let item of messages" [ngClass]="{'me': item.isMe}">
+      <div class="chat-timestamp">
+        {{item.timestamp}}
+      </div>
+
+      <div class="chat-item-content">
+        <div class="chat-avatar" *ngIf="!item.isMe">
+          <img [src]="item.avatar">
+        </div>
+
+        <div class="chat-item-bubble" [ngClass]="{'bubble-image': item.type == 'image'}">
+          <i class="icon-tail"></i>
+          <div class="chat-body" *ngIf="item.type !== 'image'" [innerHtml]="item.body | nlbr"></div>
+          <img [src]="item.body" *ngIf="item.type == 'image'">
+        </div>
+
+        <div class="chat-item-reaction" *ngIf="!item.isMe && item.type == 'image'">
+          <ion-icon name="md-heart-outline" class="text-muted text-2x"></ion-icon>
+        </div>
+      </div>
+
+      <div class="chat-item-status" *ngIf="item.isMe">Sent</div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer [keyboardAttach]="content">
+  <ion-toolbar>
+    <ion-input #input class="m-l-sm" [(ngModel)]="typingMessage" placeholder="Type a message..."></ion-input>
+    <ion-buttons right>
+      <button type="submit" [disabled]="typingMessage.length == 0" ion-button small (click)="sendText(typingMessage)">
+        Send
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

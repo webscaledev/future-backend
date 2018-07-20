@@ -1,0 +1,24 @@
+<ion-header>
+
+  <ion-navbar color="settings" no-border-bottom>
+    <ion-title>Settings</ion-title>
+  </ion-navbar>
+
+  <ion-toolbar color="white" class="my-toolbar no-padder">
+    <ion-segment mode="md" [(ngModel)]="activeSegment">
+      <ion-segment-button value="0">
+        Account
+      </ion-segment-button>
+      <ion-segment-button value="1">
+        Privacy
+      </ion-segment-button>
+      <ion-segment-button value="2">
+        Communications
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <user-logout></user-logout>
+</ion-content>

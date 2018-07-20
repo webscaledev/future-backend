@@ -1,0 +1,43 @@
+<ion-header>
+
+  <ion-navbar color="primary" no-border-bottom>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="goToProfile()">
+        <ion-avatar>
+          <img class="rounded thumb-xxs b b-white" src="assets/img/hieu.png">
+        </ion-avatar>
+      </button>
+    </ion-buttons>
+
+    <ion-title>Messaging</ion-title>
+  </ion-navbar>
+
+  <ion-toolbar color="white" class="my-toolbar box-shadow">
+    <ion-searchbar placeholder="Search messages"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="has-fab-bottom">
+    <ion-row class="wrapper-sm b-b b-light" (click)="goToMessage()" *ngFor="let i of [0,1,2,3,4,5,6,7,8]">
+      <ion-col col-auto>
+        <ion-avatar item-start>
+          <user-avatar [sizeClass]="'thumb'"></user-avatar>
+        </ion-avatar>
+      </ion-col>
+      <ion-col class="text-ellipsis-flex">
+        <div class="l-h">
+          <div class="font-bold text-ellipsis">Ryan Reynold {{postIndex}}</div>
+          <div class="text-sm text-muted">
+            Hello Hieu, thanks for accepting my invitation. I was wondering...
+          </div>
+        </div>
+      </ion-col>
+      <ion-col col-auto>
+        <div class="text-muted text-xs m-t-xs">Oct 14</div>
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-content>
+
+<button ion-fab class="button-fab"><ion-icon name="ios-create"></ion-icon></button>

@@ -1,6 +1,6 @@
 {
   "name": "futureApp",
-  "app_id": "",
+  "app_id": "0bfc2c72",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
