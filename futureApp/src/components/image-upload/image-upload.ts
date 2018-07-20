@@ -35,7 +35,7 @@ export class ImageUploadComponent {
     this.image = "data:image/jpg;base64," + file;
     this.task = this.storage.ref(path).putString(this.image, "data_url");
 
-    const task = this.storage.upload(path, file);
+    // const task = this.storage.upload(path, file);
     const ref = this.storage.ref(path);
 
     console.log("Image uploaded!");
@@ -60,7 +60,7 @@ export class ImageUploadComponent {
     //   .downloadURL()
     //   .pipe(tap(url => this.uploadFinished.emit(url)))
     //   .subscribe();
-    task
+    this.task
       .snapshotChanges()
       .pipe(
         finalize(() => {
