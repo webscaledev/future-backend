@@ -12,7 +12,7 @@ today! As a contributor, here are the guidelines we would like you to follow:
  - [Commit Message Guidelines](#commit)
 
 ## <a name="coc"></a> Code of Conduct
-Help us keep TFG-app open and inclusive. Please read and follow our [Code of Conduct][coc].
+Help us keep TFG-app open and inclusive. Please read and follow our [Code of Conduct][CODE_OF_CONDUCT.md].
 
 ## <a name="question"></a> Got a Question or Problem?
 
