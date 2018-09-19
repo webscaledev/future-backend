@@ -1,8 +1,7 @@
 {
-  "name": "futureApp",
-  "app_id": "0bfc2c72",
-  "type": "ionic-angular",
+  "name": "futureAppv4",
   "integrations": {
     "cordova": {}
-  }
+  },
+  "type": "angular"
 }

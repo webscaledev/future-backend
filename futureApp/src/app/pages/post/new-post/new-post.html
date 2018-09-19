@@ -1,0 +1,67 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-buttons start>
+      <button ion-button color="light" (click)="dismiss()">
+        <ion-icon name="md-close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Post</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content #content padding text-center class="content-noscroll">
+ <ng-container *ngIf="auth.user | async as user">
+  <div class="wrapper-sm post-new h-full">
+    <!-- <ion-row class="h-full"> -->
+      <!-- <ion-col col-auto>
+        <ion-avatar item-start>
+          <img class="rounded thumb-sm" [hidden]="!post.img" [src]="post.img">
+        </ion-avatar>
+      </ion-col> -->
+      <!-- <ion-col class="scroll-y"> -->
+        <img [hidden]="!post.img" [src]="post.img">
+        <ion-textarea fz-elastic placeholder="Share an article, photo, video or idea" [(ngModel)]="post.content"></ion-textarea>
+      <!-- </ion-col> -->
+    <!-- </ion-row> -->
+    <ion-input floating type="text" placeholder="Paste Img URL or select from device" [(ngModel)]="post.img"></ion-input>
+    <image-upload [userId]="user.uid" (uploadFinished)="updateURL($event)"></image-upload>
+  </div>
+  <button [disabled]="!post.img || !post.content" ion-button item-end primary small class="r" (tap)="create(user)">
+      <span class="font-bold">Post</span>
+    </button>
+  </ng-container>
+</ion-content>
+
+<!-- <ion-footer [appKeyboardAttach]="content">
+  <ion-toolbar position="bottom" color="white">
+    <ion-buttons start class="padder-sm">
+      <button ion-button icon-only>
+        <ion-icon name="ios-settings-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons start class="padder-sm">
+      <button ion-button icon-only>
+        <ion-icon name="ios-at-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons start class="padder-sm">
+      <button ion-button icon-only (click)="openPhotoPicker()">
+        <ion-icon name="ios-videocam-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons start class="padder-sm">
+      <button ion-button icon-only (click)="openPhotoPicker()">
+        <ion-icon name="ios-camera-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <div class="padder-sm" float-right>
+      <button [disabled]="!post.img || !post.content" ion-button item-end primary small class="r" (tap)="create(user)">
+        <span class="font-bold">Post</span>
+      </button>
+    </div>
+  </ion-toolbar>
+</ion-footer> -->

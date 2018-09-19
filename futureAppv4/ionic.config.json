@@ -1,7 +1,0 @@
-{
-  "name": "futureAppv4",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "angular"
-}
