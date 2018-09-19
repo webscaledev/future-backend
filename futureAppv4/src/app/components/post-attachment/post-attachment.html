@@ -1,0 +1,25 @@
+<div [ngSwitch]="type">
+  <div *ngSwitchCase="'image'">
+    <img class="w-full" src="assets/img/photo2.png">
+  </div>
+
+  <div *ngSwitchCase="'url'">
+    <div class="wrapper-sm">
+      <div class="b b-light">
+        <div class="wrapper-sm l-h">
+          Today, we celebrate our new milestone of 1,000,000 sales world wide. I want to say thanks to all of my partners and friends.
+        </div>
+        <img class="w-full" src="assets/img/photo1.png">
+        <ion-row class="padder-sm">
+          <ion-col class="l-h">
+            <div class="font-bold">Homepage</div>
+            <div class="text-xs text-muted">homepage.com</div>
+          </ion-col>
+          <ion-col ion-auto text-right>
+            <ion-icon class="text-2x text-muted" name="ios-bookmark-outline"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<ng-container *ngIf="auth.user | async as user">
+  <ion-header>
+
+    <ion-navbar color="profile">
+      <ion-title>Wijzig Profiel</ion-title>
+      <ion-buttons end>
+        <button [disabled]="!profile.photoURL" ion-button small (click)="updateProfile(user)">
+          Opslaan
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+
+  </ion-header>
+
+
+  <ion-content padding>
+
+    <div class="bg-white wrapper text-center has-avatar-raised m-b-sm">
+        <ion-avatar class="avatar-raised">
+            <img class="profilepic rounded thumb-lg" [src]="profile.photoURL || 'assets/img/default-avatar.jpg'">
+          </ion-avatar>
+      <image-upload [userId]="user.uid" (uploadFinished)="updateURL($event)"></image-upload>
+      <ion-item>
+        <ion-label floating>Naam</ion-label>
+        <ion-input [(ngModel)]="profile.displayName" type="text">{{ profile.displayName }}</ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Maatschap</ion-label>
+        <ion-input [(ngModel)]="profile.maatschap" type="text">{{ profile.maatschap }}</ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Mobiel</ion-label>
+        <ion-icon name="ios-chatboxes" item-start></ion-icon><ion-input [(ngModel)]="profile.mobile" type="tel">{{ profile.mobile }}</ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>LinkedIn</ion-label>
+        <ion-icon name="logo-linkedin" item-start></ion-icon><ion-input [(ngModel)]="profile.linkedin" type="text">{{ profile.linkedin }}</ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-icon name="md-mail" item-start></ion-icon><ion-input [(ngModel)]="profile.email" type="email">{{ profile.email }}</ion-input>
+      </ion-item>
+    </div>
+  </ion-content>
+</ng-container>

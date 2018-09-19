@@ -1,0 +1,185 @@
+<ion-header>
+  <ion-navbar color="primary" no-border-bottom>
+    <ion-searchbar placeholder="Search"></ion-searchbar>
+
+    <ion-buttons end>
+      <button ion-button (click)="toggleResult(false)">
+        Cancel
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+  <ion-toolbar *ngIf="showResult" color="white" class="my-toolbar no-padder">
+    <ion-scroll scrollX="true">
+      <ion-segment mode="md" [(ngModel)]="activeSegment">
+        <ion-segment-button value="0">
+          All
+        </ion-segment-button>
+        <ion-segment-button value="1">
+          People
+        </ion-segment-button>
+        <ion-segment-button value="2">
+          Jobs
+        </ion-segment-button>
+        <ion-segment-button value="3">
+          Content
+        </ion-segment-button>
+        <ion-segment-button value="4">
+          Companies
+        </ion-segment-button>
+      </ion-segment>
+    </ion-scroll>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #content class="bg-muted">
+  <!-- INITIAL SEARCH PAGE -->
+  <div *ngIf="!showResult">
+    <div class="wrapper bg-white m-b-sm">
+      <div class="font-bold m-b">Search for</div>
+      <ion-row>
+        <ion-col text-center>
+          <div class="search-shortcut" (click)="toggleResult(true)">
+            <ion-icon name="ios-people-outline"></ion-icon>
+          </div>
+          <div class="text-muted text-sm">People</div>
+        </ion-col>
+        <ion-col text-center>
+          <div class="search-shortcut" (click)="toggleResult(true)">
+            <ion-icon name="ios-briefcase-outline"></ion-icon>
+          </div>
+          <div class="text-muted text-sm">Jobs</div>
+        </ion-col>
+        <ion-col text-center>
+          <div class="search-shortcut" (click)="toggleResult(true)">
+            <ion-icon name="ios-copy-outline"></ion-icon>
+          </div>
+          <div class="text-muted text-sm">Posts</div>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <div class="bg-white m-b-sm">
+      <div class="font-bold wrapper">Recent searches</div>
+
+      <ion-list no-lines>
+        <ion-item *ngFor="let i of [0,1,2,3,4]; let index = index">
+          <ion-avatar item-start>
+            <user-avatar></user-avatar>
+          </ion-avatar>
+          <h3>Metalic Ionas ({{index + 1}})</h3>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+
+  <!-- SEARCH RESULT -->
+  <div class="bg-white" *ngIf="showResult">
+    <!-- ALL or PEOPLE -->
+    <div *ngIf="activeSegment == 0 || activeSegment == 1">
+      <ion-row class="wrapper-sm b-b b-light" *ngFor="let i of [0,1,2,3,4,5,6,7,8]">
+        <ion-col col-auto>
+          <ion-avatar item-start>
+            <user-avatar [sizeClass]="'thumb-sm'"></user-avatar>
+          </ion-avatar>
+        </ion-col>
+        <ion-col class="text-ellipsis-flex">
+          <div class="l-h">
+            <div class="font-bold text-ellipsis">Ryan Reynold {{postIndex}} <span class="text-muted font-normal">· 1st</span></div>
+            <div class="text-sm text-muted text-ellipsis">VP of Human Resource, SML</div>
+            <div class="text-xxs text-muted">
+              <ion-icon name="ios-pin-outline"></ion-icon>
+              Hanoi, Vietnam
+            </div>
+          </div>
+        </ion-col>
+        <ion-col col-auto align-self-center>
+          <ion-icon class="text-lg text-muted" name="ios-chatboxes-outline"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <!-- JOBS -->
+    <div *ngIf="activeSegment == 2 || activeSegment == 4">
+      <ion-row class="wrapper-sm b-b b-light" *ngFor="let i of [0,1,2,3,4,5,6,7,8]; let postIndex = index">
+        <ion-col col-auto>
+          <ion-avatar item-start>
+            <img class="thumb-sm" src="assets/img/company.png">
+          </ion-avatar>
+        </ion-col>
+        <ion-col class="text-ellipsis-flex">
+          <div class="l-h">
+            <div class="font-bold text-ellipsis">Senior UI/UX Designer {{postIndex}}</div>
+            <div class="text-sm text-muted text-ellipsis">Marvel Universe Corp</div>
+            <div class="text-xxs text-muted">
+              <ion-icon name="ios-pin-outline"></ion-icon>
+              Hanoi, Vietnam
+            </div>
+          </div>
+        </ion-col>
+        <ion-col text-right col-auto align-self-center>
+          <ion-icon class="text-lg text-muted" name="ios-bookmark-outline"></ion-icon>
+          <div class="span text-xs text-muted m-t">2d</div>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <div class="bg-muted" *ngIf="activeSegment == 3">
+      <div class="m-t-sm bg-white" *ngFor="let i of [0,1,2,3,4,5]; let postIndex = index" (click)="goToPost(postIndex)">
+        <ion-row class="wrapper-sm">
+          <ion-col col-auto>
+            <ion-avatar item-start>
+              <user-avatar [sizeClass]="'thumb-sm'"></user-avatar>
+            </ion-avatar>
+          </ion-col>
+          <ion-col class="text-ellipsis-flex">
+            <div class="l-h">
+              <div class="font-bold text-ellipsis">Ryan Reynold {{postIndex}}</div>
+              <div class="text-sm text-muted text-ellipsis">VP of Human Resource, SML</div>
+              <div class="text-sm text-muted">2d · Edited</div>
+            </div>
+          </ion-col>
+          <ion-col col-auto>
+            <ion-icon class="text-2x text-muted" name="more" (click)="presentPopover($event)"></ion-icon>
+          </ion-col>
+        </ion-row>
+
+        <div class="post-caption padder m-b-sm pos-rlt l-h">
+          The site has an Alexa Internet ranking as the 20th most popular website (October 2016). Based in the United States, the site is, as of 2013, available in 24 languages,[11] including Arabic, Chinese, English, French
+          <span class="pos-abt bottom right text-muted padder bg-white">...see more</span>
+        </div>
+
+        <post-attachment type="{{postIndex % 2 == 1 ? 'url' : 'image'}}"></post-attachment>
+
+        <div class="padder m-b-sm">
+          <div class="b-b b-light">
+            <div class="m-t-sm m-b-sm">
+              6 Likes · 24 Comments
+            </div>
+          </div>
+        </div>
+
+        <ion-row>
+          <ion-col>
+            <button ion-button icon-left clear small color="muted">
+              <ion-icon name="thumbs-up"></ion-icon>
+              <div>Like</div>
+            </button>
+          </ion-col>
+          <ion-col>
+            <button ion-button icon-left clear small color="muted">
+              <ion-icon name="text"></ion-icon>
+              <div>Comment</div>
+            </button>
+          </ion-col>
+          <ion-col center text-center>
+            <button ion-button icon-left clear small color="muted">
+              <ion-icon name="share"></ion-icon>
+              <div>Share</div>
+            </button>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div>
+  </div>
+</ion-content>
