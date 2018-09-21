@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { NavController, NavParams, ToastController } from "@ionic/angular";
 import { DatabaseService, Post } from "../../../services/database/database";
 import { AuthService } from "../../../services/auth/auth";
-import { ImagePicker } from "@ionic-native/image-picker";
+import { ImagePicker } from "@ionic-native/image-picker/ngx";
 
 @Component({
   selector: "page-new-post",

@@ -4,14 +4,14 @@ import { AuthService } from "../../services/auth/auth";
 import { Observable } from "rxjs";
 import { NavController, Platform, LoadingController } from "@ionic/angular";
 import { SharepointService } from "../../services/sharepoint/sharepoint";
-import { File } from "@ionic-native/file";
+import { File } from "@ionic-native/file/ngx";
 import {
   DocumentViewer,
   DocumentViewerOptions
-} from "@ionic-native/document-viewer";
-import { FileTransfer } from "@ionic-native/file-transfer";
-import { FileOpener } from "@ionic-native/file-opener";
-import { InAppBrowser } from "@ionic-native/in-app-browser";
+} from "@ionic-native/document-viewer/ngx";
+import { FileTransfer } from "@ionic-native/file-transfer/ngx";
+import { FileOpener } from "@ionic-native/file-opener/ngx";
+import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { LIST_ANIMATION } from "../../pages/animations/list.animation";
 
 @Component({

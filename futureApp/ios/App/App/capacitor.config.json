@@ -1,0 +1,6 @@
+{
+  "appId": "com.futuregroup.app",
+  "appName": "futureapp",
+  "bundledWebRuntime": false,
+  "webDir": "www"
+}

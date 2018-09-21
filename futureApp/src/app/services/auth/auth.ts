@@ -13,7 +13,7 @@ import {
   MSAdal,
   AuthenticationContext,
   AuthenticationResult
-} from "@ionic-native/ms-adal";
+} from "@ionic-native/ms-adal/ngx";
 import { Observable, of } from "rxjs";
 import { switchMap, first } from "rxjs/operators";
 import { Config } from "../../../config";

@@ -1,19 +1,19 @@
-import { NgModule, ErrorHandler } from "@angular/core";
+import { NgModule, ErrorHandler, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { IonicModule, IonicErrorHandler } from "ionic-angular";
 import { AppComponent } from "./app.component";
-import { Keyboard } from "@ionic-native/keyboard";
-import { ImagePicker } from "@ionic-native/image-picker";
+import { Keyboard } from "@ionic-native/keyboard/ngx";
+import { ImagePicker } from "@ionic-native/image-picker/ngx";
 import { HttpClientModule } from "@angular/common/http";
 import { ComponentsModule } from "./components/components.module";
 import { ElasticModule } from "ng-elastic";
 import { IonicStorageModule } from "@ionic/storage";
 import { WelcomePageModule } from "./pages/welcome/welcome.module";
 import { AnimatorModule } from "css-animator";
-import { StatusBar } from "@ionic-native/status-bar";
-import { SplashScreen } from "@ionic-native/splash-screen";
-import { Camera } from "@ionic-native/camera";
+import { StatusBar } from "@ionic-native/status-bar/ngx";
+import { SplashScreen } from "@ionic-native/splash-screen/ngx";
+import { Camera } from "@ionic-native/camera/ngx";
 import { AngularFireModule } from "@angular/fire";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { AngularFireStorageModule } from "@angular/fire/storage";
@@ -22,17 +22,17 @@ import { AngularFireFunctionsModule } from "@angular/fire/functions";
 import { AngularFireMessagingModule } from "@angular/fire/messaging";
 import { DatabaseService } from "./services/database/database";
 import { Config } from "../config";
-import { Firebase } from "@ionic-native/firebase";
+import { Firebase } from "@ionic-native/firebase/ngx";
 import { AuthService } from "./services/auth/auth";
-import { FCM } from "@ionic-native/fcm";
-import { MSAdal } from "@ionic-native/ms-adal";
+import { FCM } from "@ionic-native/fcm/ngx";
+import { MSAdal } from "@ionic-native/ms-adal/ngx";
 import { MenuPageModule } from "./pages/menu/menu.module";
 import { SharepointService } from "./services/sharepoint/sharepoint";
-import { InAppBrowser } from "@ionic-native/in-app-browser";
-import { File } from "@ionic-native/file";
-import { FileTransfer } from "@ionic-native/file-transfer";
-import { DocumentViewer } from "@ionic-native/document-viewer";
-import { FileOpener } from "@ionic-native/file-opener";
+import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
+import { File } from "@ionic-native/file/ngx";
+import { FileTransfer } from "@ionic-native/file-transfer/ngx";
+import { DocumentViewer } from "@ionic-native/document-viewer/ngx";
+import { FileOpener } from "@ionic-native/file-opener/ngx";
 import { AppRoutingModule } from "./app-routing.module";
 import { RouteReuseStrategy } from "@angular/router";
 import { IonicRouteStrategy } from "@ionic/angular";
@@ -68,8 +68,8 @@ import { IonicRouteStrategy } from "@ionic/angular";
     AppRoutingModule
   ],
   providers: [
-    // StatusBar,
-    // SplashScreen,
+    StatusBar,
+    SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Keyboard,
     ImagePicker,
@@ -87,6 +87,7 @@ import { IonicRouteStrategy } from "@ionic/angular";
     FileTransfer,
     FileOpener
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}

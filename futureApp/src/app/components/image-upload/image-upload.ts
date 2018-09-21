@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { filter, tap, finalize } from "rxjs/operators";
 
 import { ModalController, NavParams } from "@ionic/angular";
-import { Camera, CameraOptions } from "@ionic-native/camera";
+import { Camera, CameraOptions } from "@ionic-native/camera/ngx";
 
 import {
   AngularFireStorage,
